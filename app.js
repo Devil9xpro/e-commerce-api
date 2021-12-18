@@ -21,7 +21,7 @@ const erroHandlerMiddleware = require('./middleware/error-handler')
 app.disable('etag')
 app.use(morgan('tiny'))
 app.use(express.json())
-app.use(cookieParser())
+app.use(cookieParser(process.env.JWT_SECRET))
 
 app.get('/', (req, res) => {
     res.status(200).send('e-commerce api')
