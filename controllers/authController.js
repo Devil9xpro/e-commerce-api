@@ -4,7 +4,7 @@ const {
 } = require('http-status-codes')
 const CustomError = require('../errors')
 const {
-    createJWT
+    attachCookiesToResponse
 } = require('../utils')
 
 
@@ -34,12 +34,9 @@ const register = async (req, res) => {
         userId: user._id,
         role: user.role
     }
-    const token = createJWT({
-        payload: tokenUser
-    })
+    attachCookiesToResponse({res, user: tokenUser})
     res.status(StatusCodes.CREATED).json({
-        user: tokenUser,
-        token
+        user: tokenUser
     })
 }
 

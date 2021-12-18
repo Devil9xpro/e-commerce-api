@@ -5,6 +5,9 @@ const app = express()
 //logging
 const morgan = require('morgan')
 
+//access cookie
+const cookieParser = require('cookie-parser')
+
 //database connect
 const connectDB = require('./db/connect')
 
@@ -18,6 +21,7 @@ const erroHandlerMiddleware = require('./middleware/error-handler')
 app.disable('etag')
 app.use(morgan('tiny'))
 app.use(express.json())
+app.use(cookieParser())
 
 app.get('/', (req, res) => {
     res.status(200).send('e-commerce api')
