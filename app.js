@@ -28,6 +28,7 @@ app.use(cookieParser(process.env.JWT_SECRET))
 app.use(cors())
 
 app.get('/', (req, res) => {
+    console.log(req.signedCookies)
     res.status(200).send('e-commerce api')
 })
 
