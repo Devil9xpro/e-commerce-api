@@ -8,6 +8,8 @@ const morgan = require('morgan')
 //access cookie
 const cookieParser = require('cookie-parser')
 
+const cors = require('cors')
+
 //database connect
 const connectDB = require('./db/connect')
 
@@ -22,6 +24,7 @@ app.disable('etag')
 app.use(morgan('tiny'))
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET))
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.status(200).send('e-commerce api')
