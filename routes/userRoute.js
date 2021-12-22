@@ -15,7 +15,7 @@ const {
 // Permission can be admin, owner
 router.route('/').get(authenticatedUser, authorizePermissions('admin'), getAllUsers)
 
-router.route('/showMe').get(showCurrentUser)
+router.route('/showMe').get(authenticatedUser, showCurrentUser)
 router.route('/updateUser').patch(updateUser)
 router.route('/updateUserPassword').patch(updateUserPassword)
 
