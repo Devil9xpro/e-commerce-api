@@ -3,6 +3,13 @@ const {
     StatusCodes
 } = require('http-status-codes')
 const CustomError = require('../errors')
+const {
+    createTokenUser,
+    attachCookiesToResponse
+} = require('../utils')
+const {
+    use
+} = require('express/lib/router')
 
 const getAllUsers = async (req, res) => {
     const users = await User.find({
@@ -35,8 +42,32 @@ const showCurrentUser = async (req, res) => {
     })
 }
 
+// update user wiith user.findOneAndUpdate
 const updateUser = async (req, res) => {
-    res.send(req.body)
+    const {
+        email,
+        name
+    } = req.body
+    if (!email || !name) {
+        throw new CustomError.BadRequestError('Please provide both email and name!!')
+    }
+    const user = await User.findOneAndUpdate({
+        _id: req.user.userId
+    }, {
+        email,
+        name
+    }, {
+        new: true,
+        runValidators: true
+    })
+    const tokenUser = createTokenUser(user)
+    attachCookiesToResponse({
+        res,
+        user: tokenUser
+    })
+    res.status(StatusCodes.OK).json({
+        user: tokenUser
+    })
 }
 
 const updateUserPassword = async (req, res) => {
