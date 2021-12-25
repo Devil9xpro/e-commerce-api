@@ -5,7 +5,8 @@ const {
 const CustomError = require('../errors')
 const {
     createTokenUser,
-    attachCookiesToResponse
+    attachCookiesToResponse,
+    checkPermissions,
 } = require('../utils')
 const {
     use
@@ -31,6 +32,7 @@ const getSingleUser = async (req, res) => {
     if (!user) {
         throw new CustomError.NotFoundError(`No user with id : ${req.params.id}`)
     }
+    checkPermissions(req.user, user._id)
     res.status(StatusCodes.OK).json({
         user
     })
