@@ -8,6 +8,8 @@ const morgan = require('morgan')
 //access cookie
 const cookieParser = require('cookie-parser')
 
+const fileUpload = require('express-fileupload')
+
 const cors = require('cors')
 
 //database connect
@@ -26,6 +28,8 @@ app.disable('etag')
 app.use(morgan('tiny'))
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET))
+app.use(express.static('./public'))
+app.use(fileUpload())
 app.use(cors())
 
 app.get('/', (req, res) => {
