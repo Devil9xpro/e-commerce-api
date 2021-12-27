@@ -62,7 +62,23 @@ const ProductSchema = new mongoose.Schema({
         required: true
     },
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+        virtuals: true
+    },
+    toObject: {
+        virtuals: true
+    }
+})
+
+//properties that do not persist, only exist logically
+ProductSchema.virtual('reviews', {
+    ref: 'Review',
+    localField: '_id',
+    foreignField: 'product',
+    justOne: false,
+    // match: condition for relation
+    // match: {rating: 5},
 })
 
 module.exports = mongoose.model('Product', ProductSchema)
