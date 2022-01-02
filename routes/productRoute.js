@@ -13,6 +13,10 @@ const {
     uploadImage
 } = require('../controllers/productController')
 
+const {
+    getSingleProductReviews
+} = require('../controllers/reviewController')
+
 router.route('/')
     .post([authenticatedUser, authorizePermissions('admin')], createProduct)
     .get(getAllProduct)
@@ -24,5 +28,8 @@ router.route('/:id')
     .get(getSingleProduct)
     .patch([authenticatedUser, authorizePermissions('admin')], updateProduct)
     .delete([authenticatedUser, authorizePermissions('admin')], deleteProduct)
+
+router.route('/:id/reviews')
+    .get(getSingleProductReviews)
 
 module.exports = router
