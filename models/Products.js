@@ -81,4 +81,10 @@ ProductSchema.virtual('reviews', {
     // match: {rating: 5},
 })
 
+ProductSchema.pre('remove', async function (req, res, next) {
+    await this.model('Review').deleteMany({
+        product: this._id
+    })
+})
+
 module.exports = mongoose.model('Product', ProductSchema)
